@@ -34,6 +34,22 @@ namespace OPPNandoSalvatierraSYSM9.Managers
             get { return _currentUser != null; }
         }
 
+        public bool Login(string username, string password)
+        {
+            foreach (var u in _users)
+            {
+                if (string.Equals(u.Username, username, StringComparison.OrdinalIgnoreCase)
+                    && u.Password == password)
+                {
+                    CurrentUser = u;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
