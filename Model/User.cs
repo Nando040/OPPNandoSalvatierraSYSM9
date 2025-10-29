@@ -9,6 +9,7 @@ namespace OPPNandoSalvatierraSYSM9.Model
 {
     public class User
     {
+        //Attributer/properties
         public string Username { get; set; }
         public string Password { get; set; }
 
@@ -17,6 +18,8 @@ namespace OPPNandoSalvatierraSYSM9.Model
         public string Role { get; set; }
 
         public string Country { get; set; }
+
+        //Konstruktor
         public User(string username, string password)
         {
             Username = username;

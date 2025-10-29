@@ -30,20 +30,27 @@
             <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
 
+        <!-- Title TextBlock -->
         <TextBlock Grid.Column="3" Grid.Row="1" Text="CookMaster" 
                    FontSize="36" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,0,0,10" 
                    FontFamily="Magneto" FontWeight="Bold" Width="315"/>
+        <!-- Text som hänvisar var du ska skriva använvarnamn.-->
         <TextBlock Grid.Column="1" Grid.Row="2" Text="Username" 
                    FontSize="16" Margin="0,10,5,10" FontFamily="Candara" FontWeight="Bold"/>
+        <!-- Textbox där du matar in användarnamn-->
         <TextBox Margin="0,0,0,10" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" 
                  Grid.Column="1" Grid.Row="3" Width="200" Height="25" FontFamily="Candara"/>
+        <!-- Text som hänvisar var du ska skriva lösenord.-->
         <TextBlock Grid.Column="1" Grid.Row="4" Text="Password" 
                    FontSize="16" Margin="0,10,0,10" FontFamily="Candara" FontWeight="Bold"/>
+        <!-- Passwordbox där du matar in lösenord-->
         <PasswordBox Margin="0,0,0,10" x:Name="Passbox"
                      Grid.Column="1" Grid.Row="5" Width="200" Height="25" FontFamily="Candara"
                      PasswordChanged="PasswordBox_PasswordChanged"/>
+        <!-- Login knapp-->
         <Button x:Name="LoginButton" Content="Login"
                 Grid.Column="1" Grid.Row="6" Click="LoginButton_Click" FontSize="16" />
+        <!-- Register knapp-->
         <Button x:Name="RegisterButton" Content="Register" Grid.Column="6" Grid.Row="8"
                 Click="RegisterButton_Click" />
 

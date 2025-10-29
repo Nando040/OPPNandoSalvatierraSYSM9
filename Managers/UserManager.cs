@@ -8,12 +8,15 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace OPPNandoSalvatierraSYSM9.Managers
 {
     public class UserManager : INotifyPropertyChanged
     {
-        private User _currentUser;
-        private List<User> _users;
+
+        // Attributer/properties
+        private User? _currentUser;
+        private List<User> _users = new();
 
         public User CurrentUser
         {
@@ -31,9 +34,10 @@ namespace OPPNandoSalvatierraSYSM9.Managers
 
         public bool IsAuthenticated
         {
-            get { return _currentUser != null; }
+            get { return _currentUser != null; } // kod som ser till om en användare är inloggad
         }
 
+        // Metoder
         public bool Login(string username, string password)
         {
             foreach (var u in _users)
@@ -58,5 +62,9 @@ namespace OPPNandoSalvatierraSYSM9.Managers
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+    
+
+
     }
 }

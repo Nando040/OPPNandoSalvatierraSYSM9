@@ -1,4 +1,5 @@
 ﻿using OPPNandoSalvatierraSYSM9.Managers;
+using OPPNandoSalvatierraSYSM9.ViewModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
@@ -20,66 +21,32 @@ namespace OPPNandoSalvatierraSYSM9
     /// </summary>
     public partial class MainWindow : Window
     {
-        private string _username;
-
-        public string _password;
-
-        public string _error;
-
-        public string Username
-        {
-            get => _username; 
-            set { _username = value; OnPropertyChanged(); }
-        }
-        public string Password
-        {
-            get => _password; 
-            set { _password = value; OnPropertyChanged(); }
-        }
-
-        public string Error
-        {
-            get => _error; 
-            set { _error = value; OnPropertyChanged(); }
-        }
+        //Konstruktor
+      
         public MainWindow()
         {
             InitializeComponent();
+
+            //Kod som hjälper till att hämta UserManager från App.xaml.cs till ViewModel
+
+            var userManager = (UserManager)Application.Current.Resources["UserManager"];
+
+            // Koden kopplas till MVVM genom att nå codebhind som finns i LoginViewModel
+
+            DataContext = new LoginViewModel(App.UserManager);
         }
+
+        // Codebehinind för PasswordBox för att binda lösenordet till ViewModel
 
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            Password = Passbox.Password;
-        }
-
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
-        {
-            var userManager = (UserManager)Application.Current.Resources["UserManager"];
-            var success = userManager.Login(Username, Password);
-
-            if (success)
+            if (DataContext is LoginViewModel vm)
             {
-                DialogResult = true;
-                Close();
+                vm.Password = Passbox.Password;
             }
-            else
-            {
-                Error = "Fel användarnamn eller lösenord.";
-            }
-
         }
 
 
 
-        private void RegisterButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
-      
     }
 }
