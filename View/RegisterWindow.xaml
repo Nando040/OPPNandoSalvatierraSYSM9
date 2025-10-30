@@ -7,6 +7,51 @@
         mc:Ignorable="d"
         Title="RegisterWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+
+
+        </Grid.RowDefinitions>
+
+        <!-- Rubrik på fönstret -->
+        <TextBlock Grid.Column="0" Grid.Row="0" Text="Register!" 
+     FontSize="36" Grid.ColumnSpan="2"
+     FontFamily="Magneto" FontWeight="Bold" HorizontalAlignment="Center" />
+        <!-- Text som hänvisar var du ska skriva in använvarnamn.-->
+        <TextBlock Grid.Column="0" Grid.Row="2" Text="Username:" 
+     FontSize="16" Margin="10,0,0,5" FontFamily="Candara" FontWeight="Bold" HorizontalAlignment="Center" Width="70"/>
+        <!-- Textbox där du matar in användarnamn-->
+        <TextBox x:Name="Username_RegW" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5,2,0,2" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <!-- Text som hänvisar var du ska skriva in lösenord.-->
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Password:" HorizontalAlignment="Center" Margin="10,0,0,5" FontFamily="Candara" FontSize="16" FontWeight="Bold"/>
+        <!-- Passwordbox där du matar in lösenord-->
+        <PasswordBox x:Name="Password_RegW" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5,2,0,2" PasswordChanged="PasswordBox_PasswordChanged"/>
+
+        <!-- Text som hänvisar var du ska skriva in bekräfta lösenord.-->
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Confirm Password:" HorizontalAlignment="Center" Margin="10,0,0,5" FontFamily="Candara" FontSize="16" FontWeight="Bold"/>
+        <!-- Passwordbox där du matar in bekräfta lösenord-->
+        <PasswordBox x:Name="ConfirmPassword_RegW" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5,2,0,2" PasswordChanged="ConfirmPasswordBox_PasswordChanged"/>
+
+        <!-- Register knapp-->
+        <Button x:Name="RegisterButton_RegW" Content="Register" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Click="RegisterButton_RegW_Click" FontSize="16" Width="100" Margin="0,10,0,0"/>
+
+
+
+
+
+
     </Grid>
 </Window>
