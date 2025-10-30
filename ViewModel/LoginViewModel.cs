@@ -1,5 +1,6 @@
 ﻿using OPPNandoSalvatierraSYSM9.Managers;
 using OPPNandoSalvatierraSYSM9.MVVM;
+using OPPNandoSalvatierraSYSM9.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -69,11 +70,7 @@ namespace OPPNandoSalvatierraSYSM9.ViewModel
 
 
 
-        private void RegisterButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
+   
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

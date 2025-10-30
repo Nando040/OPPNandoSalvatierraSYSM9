@@ -1,4 +1,5 @@
 ﻿using OPPNandoSalvatierraSYSM9.Managers;
+using OPPNandoSalvatierraSYSM9.View;
 using OPPNandoSalvatierraSYSM9.ViewModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+
 
 namespace OPPNandoSalvatierraSYSM9
 {
@@ -46,7 +48,10 @@ namespace OPPNandoSalvatierraSYSM9
             }
         }
 
-
-
+        private void OpenRegisterButton_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new RegisterWindow { Owner = this };
+            win.ShowDialog();
+        }
     }
 }
