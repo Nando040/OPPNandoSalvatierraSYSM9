@@ -49,10 +49,11 @@
                      PasswordChanged="PasswordBox_PasswordChanged"/>
         <!-- Login knapp-->
         <Button x:Name="LoginButton" Content="Login"
-                Grid.Column="1" Grid.Row="6" Click="LoginButton_Click" FontSize="16" />
+                Grid.Column="1" Grid.Row="6" Command="{Binding LoginCOmmand}" FontSize="16" />
         <!-- Register knapp-->
-        <Button x:Name="RegisterButton" Content="Register" Grid.Column="6" Grid.Row="8"
-                Click="RegisterButton_Click" />
+        <Button x:Name="OpenRegisterButton" Content="Register" Grid.Column="6" Grid.Row="8" Command="{Binding OpenRegisterCommand}" 
+                FontSize="16" Width="100"
+                />
 
 
 

@@ -28,6 +28,11 @@ namespace OPPNandoSalvatierraSYSM9.View
             _userManager = App.UserManager; // hänvisar till UserManager som man skapade i App.xaml.cs
         }
 
+        private PasswordBox GetConfirmPassword_RegW()
+        {
+            return ConfirmPassword_RegW;
+        }
+
         private void RegisterButton_RegW_Click(object sender, RoutedEventArgs e)
         {
             var username = Username_RegW.Text?.Trim(); // Hämtar username från textboxen och tar bort eventuella mellanslag
@@ -59,6 +64,16 @@ namespace OPPNandoSalvatierraSYSM9.View
            
 
 
+        }
+
+        private void Password_RegW_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+             var vm = Password_RegW.Password;
+        }
+
+        private void ConfirmPassword_RegW_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            var vm = ConfirmPassword_RegW.Password;
         }
     }
 }

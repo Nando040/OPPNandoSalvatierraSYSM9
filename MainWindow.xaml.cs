@@ -35,8 +35,15 @@ namespace OPPNandoSalvatierraSYSM9
 
             // Koden kopplas till MVVM genom att nå codebhind som finns i LoginViewModel
 
-            DataContext = new LoginViewModel(App.UserManager);
+            var vm = new LoginViewModel(App.UserManager);
+            DataContext = vm;
+
+
+            vm.OpenRegisterRequested += (_, __) =>
+                new RegisterWindow { Owner = this }.ShowDialog();
         }
+
+     
 
         // Codebehinind för PasswordBox för att binda lösenordet till ViewModel
 
@@ -48,10 +55,6 @@ namespace OPPNandoSalvatierraSYSM9
             }
         }
 
-        private void OpenRegisterButton_Click(object sender, RoutedEventArgs e)
-        {
-            var win = new RegisterWindow { Owner = this };
-            win.ShowDialog();
-        }
+     
     }
 }
