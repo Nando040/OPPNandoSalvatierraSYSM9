@@ -52,6 +52,11 @@ namespace OPPNandoSalvatierraSYSM9.Managers
             return false;
         }
 
+        public void Logout()
+        {
+            CurrentUser = null;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
 
