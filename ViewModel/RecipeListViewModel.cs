@@ -32,7 +32,7 @@ namespace OPPNandoSalvatierraSYSM9.ViewModel
                 // Hitta och stäng RecipeListWindow
                 foreach (Window window in Application.Current.Windows)
                 {
-                    if (window.GetType().Name == "RecipeListWindow")
+                    if (window is View.RecipeListWindow)
                     {
                         window.Close();
                         break;
