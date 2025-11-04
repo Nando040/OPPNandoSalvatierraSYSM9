@@ -1,0 +1,73 @@
+﻿<Window x:Class="OPPNandoSalvatierraSYSM9.View.RecipeListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OPPNandoSalvatierraSYSM9.View"
+        mc:Ignorable="d"
+        Title="RecipeListWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+
+
+        <TextBlock Grid.Column="1" Grid.Row="1" Text="Inloggad som: " FontWeight="Bold" />
+        <TextBlock Grid.Column="2" Grid.Row="1" Text="{Binding LoggedInUser}" FontWeight="Bold"/>
+
+        <TextBlock Grid.Column="4" Grid.Row="2" Text="CookMaster" 
+   FontSize="36" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="0,0,0,10" 
+   FontFamily="Magneto" FontWeight="Bold" Width="315"/>
+
+        <Button x:Name="LogoutBtn" Content="Logout" 
+        Width="100" Height="20" Margin="5"
+        Grid.Row="1" Grid.Column="6"
+        Command="{Binding LogoutCommand}"/>
+        <Button x:Name="UserDetBtn" Content="User Details"
+                Width="100" Height="20" Margin="5"
+                Grid.Row="2" Grid.Column="6"
+                Command="{Binding UserDetailsCommand}"/>
+
+        <StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="6" Orientation="Horizontal"
+            HorizontalAlignment="Left">
+            <Button x:Name="AddBtn" Content="Add Recipe" 
+            Width="100" Height="20" Margin="5"
+            Command="{Binding AddRecipeCommand}"/>
+            <Button x:Name="RemoveBtn" Content="Remove Recipe" 
+            Width="100" Height="20" Margin="5"
+            Command="{Binding RemoveRecipeCommand}"/>
+            <Button x:Name="RecipeDetBtn" Content="View Details"
+                    Width="100" Height="20" Margin="5" Command="{Binding RecipeDetailsCommand}"/> 
+
+
+
+
+        </StackPanel>
+
+        <ListBox x:Name="RecipeListBox" Height="230"
+         Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="6"
+         ItemsSource="{Binding Recipes}" 
+         SelectedItem="{Binding SelectedRecipe, Mode=TwoWay}"
+         DisplayMemberPath="Title"
+         Margin="10"/>
+    </Grid>
+</Window>
