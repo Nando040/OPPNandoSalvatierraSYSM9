@@ -1,0 +1,69 @@
+﻿<Window x:Class="OPPNandoSalvatierraSYSM9.View.AddRecipeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OPPNandoSalvatierraSYSM9.View"
+        mc:Ignorable="d"
+        Title="AddRecipeWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="130"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!--Rubrik-->
+        <TextBlock Grid.Column="0" Grid.Row="0" Text="Add New Recipe" 
+                   FontSize="36" Grid.ColumnSpan="2"
+                   FontFamily="Magneto" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10,0,20"/>
+        <!--Recept namn texthänvisning och text inmatning(textbox)-->
+        <TextBlock Grid.Column="0" Grid.Row="1" Text="Recipe Name:"  FontSize="16" Margin="10,0,0,5" 
+                   FontFamily="Candara" FontWeight="Bold"/>
+        <TextBox   Grid.Column="1" Grid.Row="1"  FontSize="16" Margin="10,0,0,5" Height="20"
+                   FontFamily="Candara" FontWeight="Bold" Text="{Binding RecipeName, UpdateSourceTrigger=PropertyChanged}"/>
+        <!--Ingredienser beskrivning texthänvisning och text inmatning(textbox)-->
+        <TextBlock Grid.Column="0" Grid.Row="2" Text="Ingredients:"  FontSize="16" Margin="10,0,0,5" 
+                   FontFamily="Candara" FontWeight="Bold"/>
+        <TextBox   Grid.Column="1" Grid.Row="2"  FontSize="16" Margin="10,0,0,5" Height="20" AcceptsReturn="True" TextWrapping="Wrap"
+                   FontFamily="Candara" FontWeight="Bold" Text="{Binding Ingredients, UpdateSourceTrigger=PropertyChanged}"/>
+        <!--Instruktioner beskrivning texthänvisning och text inmatning(textbox)-->
+        <TextBlock Grid.Column="0" Grid.Row="3" Text="Instructions:"  FontSize="16" Margin="10,0,0,5" 
+                   FontFamily="Candara" FontWeight="Bold"/>
+        <TextBox   Grid.Column="1" Grid.Row="3"  FontSize="16" Margin="10,0,0,5" Height="20" AcceptsReturn="True" TextWrapping="Wrap"
+           FontFamily="Candara" FontWeight="Bold" Text="{Binding Instructions, UpdateSourceTrigger=PropertyChanged}"/>
+        <!--Kategori beskrivning texthänvisning och val av kategori(Combobox)-->
+        <TextBlock Grid.Column="0" Grid.Row="4" Text="Category:"  FontSize="16" Margin="10,0,0,5" 
+                   FontFamily="Candara" FontWeight="Bold"/>
+        <ComboBox Grid.Column="1" Grid.Row="4" FontSize="16" Margin="10,0,0,5" Height="25"
+                   ItemsSource="{Binding Categories}" SelectedItem="{Binding Category}" />
+        <!--Text som hänvisar var man väljer Datum och en boc du väljer datum-->
+        <TextBlock Grid.Column="0" Grid.Row="5" Text="Date:"  FontSize="16" Margin="10,0,0,5" 
+                   FontFamily="Candara" FontWeight="Bold"/>
+        <DatePicker Grid.Column="1" Grid.Row="5" FontSize="16" Margin="10,0,0,5" Height="25"
+                    SelectedDate="{Binding Date}" />
+        <StackPanel Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal"
+                    HorizontalAlignment="Center" Margin="0,20,0,0">
+            <!--Lägg till recept knapp-->
+            <Button Content="Add Recipe" Width="100" Height="30" Margin="10,0,10,0"
+                    Command="{Binding AddRecipeCommand}"/>
+            <!--Avbryt knapp-->
+            <Button Content="Cancel" Width="100" Height="30" Margin="10,0,10,0"
+                    Command="{Binding CancelCommand}"/>
+        </StackPanel>
+
+
+
+
+
+
+    </Grid>
+</Window>
