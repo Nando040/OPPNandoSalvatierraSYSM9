@@ -10,13 +10,21 @@ namespace OPPNandoSalvatierraSYSM9
     /// </summary>
     public partial class App : Application
     {
-        public static UserManager UserManager { get; private set; }
+        //public static UserManager UserManager { get; private set; } = null!;
 
-        public App()
-        {
-            // Skapa UserManager direkt när appen startar
-            UserManager = new UserManager();
-        }
+
+        //protected override void OnStartup(StartupEventArgs e)
+        //{
+        //    base.OnStartup(e);
+        //    Application.Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+        //    UserManager = new UserManager();
+        //}
+
+        //public App()
+        //{
+        //    Skapa UserManager direkt när appen startar
+        //    var UserManager = new UserManager();
+        //}
     }
 
 }

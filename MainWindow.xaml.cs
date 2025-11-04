@@ -35,12 +35,32 @@ namespace OPPNandoSalvatierraSYSM9
 
             // Koden kopplas till MVVM genom att nå codebhind som finns i LoginViewModel
 
-            var vm = new LoginViewModel(App.UserManager);
+            var vm = new LoginViewModel(userManager);
             DataContext = vm;
 
+              vm.OnLoginSuccess += (s, e) =>// Detta säger till eventet OnLogin... att ignorera (Sender,args)
+              //och att den ska fokusera på kodden som kommer efteråt
+            {
+                
+                Dispatcher.Invoke(() =>
+                {
+                    var recipeListWindow = new RecipeListWindow(userManager);
+                    recipeListWindow.Show();
 
-            vm.OpenRegisterRequested += (_, __) =>
-                new RegisterWindow { Owner = this }.ShowDialog();
+                    
+                    Application.Current.MainWindow = recipeListWindow;
+
+                    
+                    Close();
+                });
+            };
+            
+
+
+            vm.OpenRegisterRequested += (_, __) => // Dett säger till eventet Open... att ignorera (Sender,args)
+            //och att den ska fokusera på kodden som kommer efteråt
+                new RegisterWindow { Owner = this }.ShowDialog();// Denna säger till ViewModel att öppna ett nytt
+            //fönster(RegisterWindow) som ska ägas/vara barn till LoginVindow
         }
 
      
@@ -52,6 +72,7 @@ namespace OPPNandoSalvatierraSYSM9
             if (DataContext is LoginViewModel vm)
             {
                 vm.Password = Passbox.Password;
+                CommandManager.InvalidateRequerySuggested();
             }
         }
 

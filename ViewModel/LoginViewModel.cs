@@ -17,10 +17,13 @@ namespace OPPNandoSalvatierraSYSM9.ViewModel
     {
 
         // Attributer/properties
+
         private readonly UserManager _userManager;
         private string _username;
         public string _password;
         public string _error;
+
+
 
         public string Username
         {
@@ -40,19 +43,21 @@ namespace OPPNandoSalvatierraSYSM9.ViewModel
         }
 
        
-        public ICommand LoginCommand { get; } // används för att Koppla Buttons utan Click i MainWindow.xaml.cs
+        public ICommand LoginCommand { get; } // används för att Koppla Buttons utan Click i MainWindow.xaml.cs}
+        public ICommand OpenRegisterCommand { get; }
+
 
         //Konstruktor
         public LoginViewModel(UserManager userManager)
         {
             _userManager = userManager;
             LoginCommand = new RelayCommand(execute => Login(), canExecute => CanLogin());
+            OpenRegisterCommand = new RelayCommand(_ => OpenRegister());
         }
 
         private bool CanLogin() =>
             !string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password); // Ser till om att både username och password är inmatade
 
-        public Managers.UserManager UserManager { get; set; }
 
 
         // Metoder
@@ -66,17 +71,25 @@ namespace OPPNandoSalvatierraSYSM9.ViewModel
             // Meddelar användaren om inloggningen misslyckades
         }
 
-        public event System.EventHandler OnLoginSuccess; // meddelar andra filer om att inloggningen lyckades
+        public event EventHandler? OpenRegisterRequested;
+        private void OpenRegister()
+        {
+            OpenRegisterRequested?.Invoke(this, EventArgs.Empty);
+        }
+
+        public event EventHandler? OnLoginSuccess; // meddelar andra filer om att inloggningen lyckades
 
 
 
    
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+     
+        
 
 
         // Ser till att binding funkar i XAML
+
+        
+
 
 
     }
