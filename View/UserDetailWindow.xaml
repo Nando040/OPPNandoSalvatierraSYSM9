@@ -1,0 +1,48 @@
+﻿<Window x:Class="OPPNandoSalvatierraSYSM9.View.UserDetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OPPNandoSalvatierraSYSM9.View"
+        mc:Ignorable="d"
+        Title="UserDetailWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" MinWidth="101"/>
+            <ColumnDefinition Width="9*"/>
+            <ColumnDefinition Width="67*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="2" Text="User Details" 
+                   FontSize="36"
+                   FontFamily="Magneto" FontWeight="Bold" HorizontalAlignment="Left" Margin="138,10,0,20" Width="246"/>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Username:" Height="20" VerticalAlignment="Center" FontWeight="Bold" Margin="10,0,81,0" Grid.ColumnSpan="2"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True"  
+                 IsReadOnly="{Binding IsEditing}" Margin="0,0,0,2" Grid.ColumnSpan="2"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Country:" Height="20" VerticalAlignment="Center" FontWeight="Bold" Margin="10,0,81,0" Grid.ColumnSpan="2"/>
+        <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Countries}" SelectedItem="{Binding Country}" IsEnabled="{Binding IsEditing}" Margin="0,0,0,1" Grid.ColumnSpan="2"/>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Password:" Height="20" VerticalAlignment="Center" FontWeight="Bold" Margin="10,0,81,0" Grid.ColumnSpan="2"/>
+        <PasswordBox Grid.Row="3" Grid.Column="1" x:Name="PasswordBox" IsEnabled="{Binding IsEditing}" Margin="0,0,0,2" Grid.ColumnSpan="2"/>
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Confirm password:" Height="20" VerticalAlignment="Center" FontWeight="Bold" Margin="10,0,81,0" Grid.ColumnSpan="2"/>
+        <PasswordBox Grid.Row="4" Grid.Column="1" x:Name="ConfirmPasswordBox" IsEnabled="{Binding IsEditing}" Margin="0,0,0,2" Grid.ColumnSpan="2"/>
+
+        <StackPanel Grid.Row="5" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="81,20,0,0">
+            <Button Content="Edit" Width="100" Margin="10,0" Command="{Binding EditCommand}" />
+            <Button Content="Save" Width="100" Margin="10,0" Command="{Binding SaveCommand}" />
+            <Button Content="Cancel" Width="100" Margin="10,0" Command="{Binding CancelCommand}" />
+        </StackPanel>
+
+    </Grid>
+</Window>
