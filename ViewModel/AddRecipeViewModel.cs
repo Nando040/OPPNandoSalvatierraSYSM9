@@ -33,11 +33,13 @@ namespace OPPNandoSalvatierraSYSM9.ViewModel
             SaveRecipeCommand = new RelayCommand(_ => SaveRecipe(), _ => CanSave());// denna koden gör aå att Commanden kopplas till ViewModel
             CancelCommand = new RelayCommand(_ => Cancel());// som ovanför men till CancelCommand
         }
-        //Properties döe xaml filen
+        //Properties för xaml filen
         public string RecipeName { get; set; } = " ";
         public string Ingredients { get; set; } = " ";
         public string Instructions { get; set; } = " ";
         public string Category { get; set; } = " ";
+
+        public string Time { get; set; } = " ";
 
         public DateTime Date { get; set; }
 
@@ -54,15 +56,20 @@ namespace OPPNandoSalvatierraSYSM9.ViewModel
             !string.IsNullOrWhiteSpace(RecipeName) &&
             !string.IsNullOrWhiteSpace(Ingredients) &&
             !string.IsNullOrWhiteSpace(Instructions) &&
-            !string.IsNullOrWhiteSpace(Category);
+            !string.IsNullOrWhiteSpace(Category) &&
+             !string.IsNullOrWhiteSpace(Time);
 
         private void SaveRecipe()// Metod som gör så att man kan spara recept
         {
             var r = new Recipe // skabar ett nytt recept ovjekt som man kan fylla i information
             {
                 Titel = RecipeName,
-
                 Instruktioner = Instructions,
+                Ingredienser = Ingredients,
+                Kategori = Category,
+                Tid = Time,
+                Datum = Date,
+                Ägare = _userManager.CurrentUser?.Username ?? "Ghost" // sätter ägare till den inloggade användaren eller "Unknown" om ingen är inloggad
             };
 
             _userManager.CurrentUser?.Recipes.Add(r); // denna koden lägger till receptet man skrivit in till den inloggade användaren
