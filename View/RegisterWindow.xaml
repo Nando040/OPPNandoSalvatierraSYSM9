@@ -20,6 +20,8 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
 
 
@@ -50,14 +52,24 @@
         <!-- Passwordbox där du matar in bekräfta lösenord-->
         <PasswordBox x:Name="ConfirmPassword_RegW" Grid.Row="4" Grid.Column="1" 
                      HorizontalAlignment="Stretch" Margin="5,2,0,2" PasswordChanged="ConfirmPassword_RegW_PasswordChanged"/>
+        <!-- Text som hänvisar var du ska välja land.-->
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Country:" 
+                   HorizontalAlignment="Center" Margin="10,0,0,5" FontFamily="Candara" FontSize="16" FontWeight="Bold"/>
+        <!--Combobox för val av land-->
+        <ComboBox x:Name="CountryBox" Grid.Row="5" Grid.Column="1"
+          HorizontalAlignment="Stretch" Margin="5,2,0,2" SelectionChanged="CountryBox_SelectionChanged"/>
+        <!--Text som hänvisar var man ska skriva Displayname-->
+        <TextBlock Grid.Row="6" Grid.Column="0" Text="Display Name:" 
+                   HorizontalAlignment="Center" Margin="10,0,0,5" FontFamily="Candara" FontSize="16" FontWeight="Bold"/>
+        <!--Textbox för inmatning av Displayname-->
+        <TextBox x:Name="DisplayName_RegW" Grid.Row="6" Grid.Column="1"
+                 HorizontalAlignment="Stretch" Margin="5,2,0,2" Text="{Binding DisplayName, UpdateSourceTrigger=PropertyChanged}"/>
+
 
         <!-- Register knapp-->
-        <Button x:Name="RegisterButton_RegW" Content="Register" Grid.Row="7"
+        <Button x:Name="RegisterButton_RegW" Content="Register" Grid.Row="9"
                 Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Click="RegisterButton_RegW_Click"
                 FontSize="16" Width="100" Margin="0,10,0,0"/>
-
-
-
 
 
 
