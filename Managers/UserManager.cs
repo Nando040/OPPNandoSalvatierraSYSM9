@@ -16,7 +16,7 @@ namespace OPPNandoSalvatierraSYSM9.Managers
     {
 
         // Attributer/properties
-        private User _currentUser; // Håller _currentUser intern endast UserManager får ändra innehållet om vem som är _currenUser
+        private User? _currentUser; // Håller _currentUser intern endast UserManager får ändra innehållet om vem som är _currenUser
         private List<User> _users; // Är en intern privat lista som endast UserManager har i minnet med alla användare
 
         public User? CurrentUser // Properties till Current User som säger att User kan vara null(med ? tecknet)
@@ -33,6 +33,8 @@ namespace OPPNandoSalvatierraSYSM9.Managers
             }
 
         }
+
+        public bool ÄrAdmin => CurrentUser?.Role?.Equals("Admin", StringComparison.OrdinalIgnoreCase) == true; // Property som ser om den inloggade användaren är Admin eller inte
 
         public bool IsAuthenticated // property som ser om någon är inloggad eller inte
         {
@@ -136,14 +138,57 @@ namespace OPPNandoSalvatierraSYSM9.Managers
             return false; // Om det inte finns så avslutar det fortfarande momentet men då vet UserManager att det inte finns samma namn.
         }
 
+        public IEnumerable<Recipe> HämtaAllaRecept()
+        {
+            return _users.SelectMany(u => u.Recipes).ToList();
+        }
+
+        public User? HittaÄgareTillRecept(Recipe recipe)
+        {
+            return _users.FirstOrDefault(u => u.Recipes.Contains(recipe));
+        }
+
+        public bool RemoveRecipeEverywhere(Recipe recipe, out string? fel) // Metod som jag gör så att Admin kan ta bort recept från alla användare
+        {
+            fel = null;
+
+            if (recipe == null)
+            {
+                fel = "Ogiltigt recept.";
+                return false;
+            }
+
+            // Försök hitta användaren som äger receptet
+            var ägare = HittaÄgareTillRecept(recipe);
+            if (ägare == null)
+            {
+                fel = "Kunde inte hitta receptets ägare.";
+                return false;
+            }
+
+            // Ta bort receptet från ägarens lista
+            var borttagen = ägare.Recipes.Remove(recipe);
+            if (!borttagen)
+            {
+                fel = "Borttagningen misslyckades.";
+                return false;
+            }
+
+            return true;
+        }
 
 
 
 
 
-        
 
-    
+
+
+
+
+
+
+
 
 
     }
