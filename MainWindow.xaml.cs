@@ -53,18 +53,19 @@ namespace OPPNandoSalvatierraSYSM9
                     Close();// Stänger MainWindow (inloggningsfönstret)
                 });
             };
-            
 
 
-            vm.OpenRegisterRequested += (_, __) => // Dett säger till eventet Open... att ignorera (Sender,args)
-            //och att den ska fokusera på kodden som kommer efteråt
-                new RegisterWindow { Owner = this }.ShowDialog();// Denna säger till ViewModel att öppna ett nytt
-            //fönster(RegisterWindow) som ska ägas/vara barn till LoginVindow
+
+            vm.OpenRegisterRequested += (_, __) =>
+            {
+                var registerWindow = new RegisterWindow(); // Skapar ett nytt fönster av typen RegisterWindow
+
+                Application.Current.MainWindow = registerWindow;// Sätter det nya fönstret som huvudfönster i applikationen
+                registerWindow.Show();
+
+                this.Close();// Stänger MainWindow (inloggningsfönstret)
+            };
         }
-
-     
-
-        
 
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e) //Event som körs när lösenordet ändras i PasswordBox
         {

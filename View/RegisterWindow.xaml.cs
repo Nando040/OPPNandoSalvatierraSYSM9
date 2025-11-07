@@ -53,6 +53,9 @@ namespace OPPNandoSalvatierraSYSM9.View
             if(_userManager.Register(username, passw1, country, out string error)) 
             {
                 MessageBox.Show("Registrering lyckades! Du kan nu logga in.");
+                var main = new MainWindow(); // Skapar ett nytt inloggningsfönster
+                Application.Current.MainWindow = main; // Sätter det nya fönstret som huvudfönster i applikationen
+                main.Show(); // Visar inloggningsfönstret
                 this.Close(); // Stänger registreringsfönstret vid lyckad registrering
             }
             else
