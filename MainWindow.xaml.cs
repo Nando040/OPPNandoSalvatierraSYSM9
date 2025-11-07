@@ -23,35 +23,34 @@ namespace OPPNandoSalvatierraSYSM9
     /// </summary>
     public partial class MainWindow : Window
     {
-        //Konstruktor
-      
         public MainWindow()
         {
             InitializeComponent();
 
-            //Kod som hjälper till att hämta UserManager från App.xaml.cs till ViewModel
+            
 
-            var userManager = (UserManager)Application.Current.Resources["UserManager"];
+            var userManager = (UserManager)Application.Current.Resources["UserManager"];//Kod som hjälper till att hämta UserManager från App.xaml.cs till ViewModel
 
-            // Koden kopplas till MVVM genom att nå codebhind som finns i LoginViewModel
+            
 
-            var vm = new LoginViewModel(userManager);
-            DataContext = vm;
+            var vm = new LoginViewModel(userManager);// Koden kopplas till MVVM genom att nå codebhind som finns i LoginViewModel
+            DataContext = vm;// Sätter DataContext för MainWindow till vm (LoginViewModel)
 
-              vm.OnLoginSuccess += (s, e) =>// Detta säger till eventet OnLogin... att ignorera (Sender,args)
+            vm.OnLoginSuccess += (s, e) =>// Detta säger till eventet OnLogin... att ignorera (Sender,args)
               //och att den ska fokusera på kodden som kommer efteråt
             {
                 
-                Dispatcher.Invoke(() =>
+                Dispatcher.Invoke(() =>// ser till att koden körs på xaml(UI tråden)
                 {
-                    var recipeListWindow = new RecipeListWindow(userManager);
-                    recipeListWindow.Show();
+                    var list = new RecipeListWindow();// Skapar ett nytt fönster av typen RecipeListWindow och skickar med userManager
+                    Application.Current.MainWindow = list;// Sätter det nya fönstret som huvudfönster i applikationen
+                    list.Show();// Visar RecipeListWindow
 
-                    
-                    Application.Current.MainWindow = recipeListWindow;
 
-                    
-                    Close();
+                    Application.Current.MainWindow = list;// Sätter det nya fönstret som huvudfönster i applikationen
+
+
+                    Close();// Stänger MainWindow (inloggningsfönstret)
                 });
             };
             
@@ -65,17 +64,19 @@ namespace OPPNandoSalvatierraSYSM9
 
      
 
-        // Codebehinind för PasswordBox för att binda lösenordet till ViewModel
+        
 
-        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e) //Event som körs när lösenordet ändras i PasswordBox
         {
-            if (DataContext is LoginViewModel vm)
+            if (DataContext is LoginViewModel vm) //kod som säkertställer att DataContext är kopplat till LoginViewModel
             {
-                vm.Password = Passbox.Password;
-                CommandManager.InvalidateRequerySuggested();
+                vm.Password = Passbox.Password; //Sätter lösenordet i ViewModel till det som finns i PasswordBox
+                //med andra ord ser till så att lösenordet i ViewModel uppdateras när användaren skriver in sitt lösenord
+                CommandManager.InvalidateRequerySuggested();// Commandot som används för att uppdatera CanExecute statusen för kommandon
             }
         }
 
+        //reflektion "kommwer snart"
      
     }
 }
