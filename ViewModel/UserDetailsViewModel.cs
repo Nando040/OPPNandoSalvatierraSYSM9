@@ -19,8 +19,10 @@ namespace OPPNandoSalvatierraSYSM9.ViewModel
         private readonly UserManager _userManager;
         private readonly User? _första; // Håller referens till den aktuella(första användarnamn innan redigering) användaren
         private bool _isEditing; // Ser till att man kan redigera fälten
-        private string _country = "Sweden"; // Standardvärde för country
+        private string _country = ""; // Standardvärde för country
         private string _username = "";
+        private string _newPassword = "";
+        private string _confirmPassword = "";
 
         // Konstruktor
         public UserDetailsViewModel(UserManager userManager)
@@ -81,7 +83,16 @@ namespace OPPNandoSalvatierraSYSM9.ViewModel
             }
         }
 
-        public string NewPassword { get; set; } = "";
+        public string NewPassword
+        {
+            get => _newPassword;
+            set { _newPassword = value ?? ""; OnPropertyChanged(); }
+        }
+        public string ConfirmPassword
+        {
+            get => _confirmPassword;
+            set { _confirmPassword = value ?? ""; OnPropertyChanged(); }
+        }
 
         public ObservableCollection<string> Countries { get; }
 
@@ -99,9 +110,10 @@ namespace OPPNandoSalvatierraSYSM9.ViewModel
 
         private void Save()
         {
-            if (string.IsNullOrWhiteSpace(Username)) // Användarnamn får inte vara tomt
+            if (string.IsNullOrWhiteSpace(Username) || Username.Length < 3) // Användarnamn får inte vara tomt
             {
-                MessageBox.Show("Användarnamn behövs");
+                MessageBox.Show("Användarnamnet är mindre än 3 tecken \n eller ej inmatad!");
+
                 return;
             }
 
@@ -116,18 +128,31 @@ namespace OPPNandoSalvatierraSYSM9.ViewModel
                 MessageBox.Show("Användarnamn finns redan");
                 return;
             }
-            if (!string.IsNullOrEmpty(NewPassword) && NewPassword.Length < 5)  // Lösenord måste vara minst 5 tecken långt
+            if (!string.IsNullOrWhiteSpace(NewPassword))
             {
-                MessageBox.Show("Lösenord för kort");
-                return;
+                if (NewPassword.Length < 5) // Lösenord måste vara minst 5 tecken
+                {
+                    MessageBox.Show("Lösenord måste vara minst 5 tecken långt.");
+                    return;
+                }
+                if (NewPassword != ConfirmPassword) // Kollar så att lösenordet och bekräfta lösenordet är samma
+                {
+                    MessageBox.Show("Lösenorden matchar inte.");
+                    return;
+                }
             }
 
-            _första.Username = Username;
-            _första.Country = Country;
-            if (!string.IsNullOrEmpty(NewPassword))
+            _första.Username = Username;// uppdaterar användarnamnet och landet för den inloggade användaren
+            _första.Country = Country;// uppdaterar användarnamnet och landet för den inloggade användaren
+
+            if (!string.IsNullOrWhiteSpace(NewPassword))
             {
                 _första.Password = NewPassword;
             }
+
+            NewPassword = "";
+            ConfirmPassword = "";
+
 
             IsEditing = false;
             CloseRequested?.Invoke(this, EventArgs.Empty);
@@ -144,10 +169,11 @@ namespace OPPNandoSalvatierraSYSM9.ViewModel
             else
             {
                 Username = string.Empty; // detta är standardvärden om ingen användare är inloggad
-                Country = "Sweden";
+                Country = string.Empty;
             }
 
             NewPassword = "";
+            ConfirmPassword = "";
             IsEditing = false; // töm alla fält och återgå till ursprungliga värden
             CloseRequested?.Invoke(this, EventArgs.Empty);
         }

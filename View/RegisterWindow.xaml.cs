@@ -21,25 +21,24 @@ namespace OPPNandoSalvatierraSYSM9.View
     public partial class RegisterWindow : Window
     {
 
-        private readonly UserManager _userManager; // kod som skickar data till UserManager ser till att man kan använda den i RegisterWindow men inte ändra den
+    private readonly UserManager _userManager; // kod som skickar data till UserManager ser till att man kan använda den i RegisterWindow men inte ändra den
         public RegisterWindow()
         {
             InitializeComponent();
-            _userManager = App.UserManager; // hänvisar till UserManager som man skapade i App.xaml.cs
+            _userManager = (UserManager)Application.Current.Resources["UserManager"]; // hänvisar till UserManager som man skapade i App.xaml.cs
+            CountryBox.ItemsSource = new[] { "Sverige", "Norge", "Danmark" };
         }
 
-        private PasswordBox GetConfirmPassword_RegW()
-        {
-            return ConfirmPassword_RegW;
-        }
+
 
         private void RegisterButton_RegW_Click(object sender, RoutedEventArgs e)
         {
             var username = Username_RegW.Text?.Trim(); // Hämtar username från textboxen och tar bort eventuella mellanslag
             var passw1 = Password_RegW.Password; // Hämtar lösenordet från PasswordBox
             var passw2 = ConfirmPassword_RegW.Password; // Hämtar bekräftelselösenordet från PasswordBox
+            var country = CountryBox.SelectedItem as string; // väljer landet från ComboBox
 
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(passw1) || string.IsNullOrWhiteSpace(passw2)) // Kontrollerar att inga fält är tomma
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(passw1) || string.IsNullOrWhiteSpace(passw2) || string.IsNullOrWhiteSpace(country)) // Kontrollerar att inga fält är tomma
             {
                 MessageBox.Show("Vänligen fyll i alla fält.");
                 return;
@@ -51,7 +50,7 @@ namespace OPPNandoSalvatierraSYSM9.View
                 return;
             }
 
-            if(_userManager.Register(username, passw1, out string error)) // Försöker registrera användaren via UserManager
+            if(_userManager.Register(username, passw1, country, out string error)) 
             {
                 MessageBox.Show("Registrering lyckades! Du kan nu logga in.");
                 this.Close(); // Stänger registreringsfönstret vid lyckad registrering
@@ -75,5 +74,12 @@ namespace OPPNandoSalvatierraSYSM9.View
         {
             var vm = ConfirmPassword_RegW.Password;
         }
+
+        private void CountryBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+        }
+
+        // Inte färdig ännu fokuserat på bygga alla fönster men ingår i finslipandet
+
     }
 }

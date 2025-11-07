@@ -101,7 +101,7 @@ namespace OPPNandoSalvatierraSYSM9.Managers
             return false;
         }
 
-        public bool Register(string username, string password, out string error) //Parametrar som kunden/användaren själv väljer och felmeddelande om det aktiveras
+        public bool Register(string username, string password, string country, out string error) //Parametrar som kunden/användaren själv väljer och felmeddelande om det aktiveras
         {
             error = "";
 
@@ -119,10 +119,9 @@ namespace OPPNandoSalvatierraSYSM9.Managers
 
             var user = new User(username, password)
             {
-                
-                Country = "Sweden",
+                Country = string.IsNullOrWhiteSpace(country) ? "Sweden" : country,
                 Role = "User"
-            }; // Skapar en ny användare med standardvärden för Country och Role
+            }; // Skapar en ny användare med valt land (eller standard "Sweden") och Role
 
             _users.Add(user);
             return true;
