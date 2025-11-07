@@ -15,16 +15,18 @@ namespace OPPNandoSalvatierraSYSM9.ViewModel
 {
     public class UserDetailsViewModel : ViewModelBase
     {
+        // Privata fält för konstruktorer och properties
         private readonly UserManager _userManager;
-        private readonly User? _första;
-        private bool _isEditing;
-        private string _country = "Sweden";
+        private readonly User? _första; // Håller referens till den aktuella(första användarnamn innan redigering) användaren
+        private bool _isEditing; // Ser till att man kan redigera fälten
+        private string _country = "Sweden"; // Standardvärde för country
         private string _username = "";
 
+        // Konstruktor
         public UserDetailsViewModel(UserManager userManager)
         {
             _userManager = userManager;
-            _första = _userManager.CurrentUser; // may be null, handle below
+            _första = _userManager.CurrentUser; 
 
             if (_första != null)
             {
@@ -34,7 +36,7 @@ namespace OPPNandoSalvatierraSYSM9.ViewModel
 
             Countries = new ObservableCollection<string> { "Sweden", "Norway", "Denmark" };
 
-            EditCommand = new RelayCommand(_ => IsEditing = true, _ => !IsEditing);
+            EditCommand = new RelayCommand(_ => IsEditing = true, _ => !IsEditing); // aktiverar commandon i fönstret
             SaveCommand = new RelayCommand(_ => Save(), _ => IsEditing);
             CancelCommand = new RelayCommand(_ => Cancel(), _ => IsEditing);
 
@@ -53,11 +55,11 @@ namespace OPPNandoSalvatierraSYSM9.ViewModel
             {
                 _isEditing = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(IsReadOnly));
+                OnPropertyChanged(nameof(IsReadOnly)); // meddealar att informationen har ändrats 
             }
         }
 
-        public bool IsReadOnly => !IsEditing;
+        public bool IsReadOnly => !IsEditing; // gör så att man inte kan ändra fälten när IsEditing är false
 
         public string Username
         {
@@ -97,26 +99,26 @@ namespace OPPNandoSalvatierraSYSM9.ViewModel
 
         private void Save()
         {
-            if (string.IsNullOrWhiteSpace(Username))
+            if (string.IsNullOrWhiteSpace(Username)) // Användarnamn får inte vara tomt
             {
                 MessageBox.Show("Användarnamn behövs");
                 return;
             }
 
-            if (_första == null)
+            if (_första == null) // Denna säger att det måste finnas en inloggad användare för att kunna spara ändringar
             {
                 MessageBox.Show("Ingen användare är inloggad.");
                 return;
             }
 
-            if (!Username.Equals(_första.Username, StringComparison.OrdinalIgnoreCase) && _userManager.UserExists(Username))
+            if (!Username.Equals(_första.Username, StringComparison.OrdinalIgnoreCase) && _userManager.UserExists(Username)) // rätt så självklar(kollar om användarnamnet redan finns)
             {
                 MessageBox.Show("Användarnamn finns redan");
                 return;
             }
-            if (!string.IsNullOrEmpty(NewPassword) && NewPassword.Length < 5)
+            if (!string.IsNullOrEmpty(NewPassword) && NewPassword.Length < 5)  // Lösenord måste vara minst 5 tecken långt
             {
-                MessageBox.Show("Lösen ord för kort");
+                MessageBox.Show("Lösenord för kort");
                 return;
             }
 
@@ -132,25 +134,25 @@ namespace OPPNandoSalvatierraSYSM9.ViewModel
 
         }
 
-        private void Cancel()
+        private void Cancel() // metod som säger till appen att avbryta redigeringen
         {
-            if (_första != null)
+            if (_första != null) 
             {
                 Username = _första.Username;
                 Country = _första.Country;
             }
             else
             {
-                Username = string.Empty;
+                Username = string.Empty; // detta är standardvärden om ingen användare är inloggad
                 Country = "Sweden";
             }
 
             NewPassword = "";
-            IsEditing = false;
+            IsEditing = false; // töm alla fält och återgå till ursprungliga värden
             CloseRequested?.Invoke(this, EventArgs.Empty);
         }
 
 
-
+        // Inte alls färdigt än! Målet var att fönstret skulle öppnas utan problem
     }
 }
