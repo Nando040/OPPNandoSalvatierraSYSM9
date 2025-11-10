@@ -19,6 +19,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!--Rubrik-->
@@ -40,30 +41,30 @@
                    FontFamily="Candara" FontWeight="Bold"/>
         <TextBox   Grid.Column="1" Grid.Row="3"  FontSize="16" Margin="10,0,0,5" Height="20" AcceptsReturn="True" TextWrapping="Wrap"
            FontFamily="Candara" FontWeight="Bold" Text="{Binding Instructions, UpdateSourceTrigger=PropertyChanged}"/>
+        <!--text som hänvisar tid och inmatning för det i en textbox-->
+        <TextBlock Grid.Column="0" Grid.Row="4" Text="Time (mins):"  FontSize="16" Margin="10,0,0,5" 
+                   FontFamily="Candara" FontWeight="Bold"/>
+        <TextBox   Grid.Column="1" Grid.Row="4"  FontSize="16" Margin="10,0,0,5" Height="20"
+                     FontFamily="Candara" FontWeight="Bold" Text="{Binding Time, UpdateSourceTrigger=PropertyChanged}"/>
         <!--Kategori beskrivning texthänvisning och val av kategori(Combobox)-->
-        <TextBlock Grid.Column="0" Grid.Row="4" Text="Category:"  FontSize="16" Margin="10,0,0,5" 
+        <TextBlock Grid.Column="0" Grid.Row="5" Text="Category:"  FontSize="16" Margin="10,0,0,5" 
                    FontFamily="Candara" FontWeight="Bold"/>
-        <ComboBox Grid.Column="1" Grid.Row="4" FontSize="16" Margin="10,0,0,5" Height="25"
+        <ComboBox Grid.Column="1" Grid.Row="5" FontSize="16" Margin="10,0,0,5" Height="25"
                    ItemsSource="{Binding Categories}" SelectedItem="{Binding Category}" />
-        <!--Text som hänvisar var man väljer Datum och en boc du väljer datum-->
-        <TextBlock Grid.Column="0" Grid.Row="5" Text="Date:"  FontSize="16" Margin="10,0,0,5" 
+        <!--Text som hänvisar var man väljer Datum och en box du väljer datum-->
+        <TextBlock Grid.Column="0" Grid.Row="6" Text="Date:"  FontSize="16" Margin="10,0,0,5" 
                    FontFamily="Candara" FontWeight="Bold"/>
-        <DatePicker Grid.Column="1" Grid.Row="5" FontSize="16" Margin="10,0,0,5" Height="25"
+        <DatePicker Grid.Column="1" Grid.Row="6" FontSize="16" Margin="10,0,0,5" Height="25"
                     SelectedDate="{Binding Date}" />
-        <StackPanel Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal"
+
+        <StackPanel Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Orientation="Horizontal"
                     HorizontalAlignment="Center" Margin="0,20,0,0">
             <!--Lägg till recept knapp-->
-            <Button Content="Add Recipe" Width="100" Height="30" Margin="10,0,10,0"
-                    Command="{Binding AddRecipeCommand}"/>
+            <Button Content="Save" Width="100" Height="30" Margin="10,0,10,0"
+                    Command="{Binding SaveRecipeCommand}"/>
             <!--Avbryt knapp-->
             <Button Content="Cancel" Width="100" Height="30" Margin="10,0,10,0"
                     Command="{Binding CancelCommand}"/>
         </StackPanel>
-
-
-
-
-
-
     </Grid>
 </Window>

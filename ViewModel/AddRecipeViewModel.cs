@@ -69,7 +69,7 @@ namespace OPPNandoSalvatierraSYSM9.ViewModel
                 Kategori = Category,
                 Tid = Time,
                 Datum = Date,
-                Ägare = _userManager.CurrentUser?.Username ?? "Ghost" // sätter ägare till den inloggade användaren eller "Unknown" om ingen är inloggad
+                Ägare = _userManager.CurrentUser?.Username ?? "Ghost" // sätter ägare till den inloggade användaren eller "Ghost" om ingen är inloggad
             };
 
             _userManager.CurrentUser?.Recipes.Add(r); // denna koden lägger till receptet man skrivit in till den inloggade användaren

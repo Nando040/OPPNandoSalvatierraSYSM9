@@ -2,6 +2,7 @@
 using OPPNandoSalvatierraSYSM9.Model;
 using OPPNandoSalvatierraSYSM9.MVVM;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
@@ -11,25 +12,18 @@ namespace OPPNandoSalvatierraSYSM9.ViewModel
     public class RecipeListViewModel : ViewModelBase
     {
         private readonly UserManager _userManager; // Låter denna klassen veta vem som är inloggad just nu
-        private Recipe _selectedRecipe; // recetp som den inloggade användaren har valt
+        private Recipe? _selectedRecipe; // recetp som den inloggade användaren har valt
         private UserManager userManager;
 
         public RecipeListViewModel(UserManager userManager) // en  konstruktorn tar emot UserManager som parameter
         {
             _userManager = userManager;
 
-            Recipes = new ObservableCollection<Recipe>( // skapar en lista som Xaml kan använda sig av för att visa recepten
-                                                        // det uppdateras automatiskt när något läggs till eller tas bort
-                _userManager.CurrentUser?.Recipes != null // kollar om den inloggade användaren har några recept och hämntar från Recipes
-                    ? _userManager.CurrentUser.Recipes
-                    : new List<Recipe>() // om det inte finns några recept så skapas en tom lista
-            );
-
+            RefreshRecipes(); // Metod som uppdaterar listan med recept från den inloggade användaren
 
             AddRecipeCommand = new RelayCommand(_ => AddRecipe()); // detta är en command som ser till att fönstret öppnas för att lägga till recept
             RemoveRecipeCommand = new RelayCommand(_ => RemoveRecipe(), _ => SelectedRecipe != null); // denna command tar bort det valda receptet från listan
             LogoutCommand = new RelayCommand(_ => Logout()); // denna command loggar ut den inloggade användaren och går tillbaka till inloggningsfönstret
-
             RecipeDetailCommand = new RelayCommand(_ => OnViewRecipeRequested?.Invoke(this, EventArgs.Empty), _ => SelectedRecipe != null);
             UserDetailsCommand = new RelayCommand(_ => OnViewUserDetailsRequested?.Invoke(this, EventArgs.Empty));
         }
@@ -43,9 +37,9 @@ namespace OPPNandoSalvatierraSYSM9.ViewModel
 
         public string CurrentUserName => _userManager.CurrentUser?.DisplayName ?? "Ghost"; // en property som visar namnet på den inloggade användaren eller "Ghost" om ingen är inloggad
 
-        public ObservableCollection<Recipe> Recipes { get; } // en property som håller alla recept i en lista som Xaml kan använda därav "observable"
+        public ObservableCollection<Recipe> Recipes { get; private set; } // en property som håller alla recept i en lista som Xaml kan använda därav "observable"
 
-        public Recipe SelectedRecipe  // Denna property håller koll på vilket recept man har valt i UI
+        public Recipe? SelectedRecipe  // Denna property håller koll på vilket recept man har valt i UI
         {
             get => _selectedRecipe; // visar dig vilket recept som användaren klickat på
             set
@@ -57,11 +51,30 @@ namespace OPPNandoSalvatierraSYSM9.ViewModel
             }
         }
 
+        // Metoder
         private void RemoveRecipe() // Metod som säger till appen att ta bort det valda receptet
         {
             if (SelectedRecipe == null) return; // om inget recept är valt så görs inget
-            Recipes.Remove(SelectedRecipe); // tar bort det valda receptet från den lokala listan som föstret använder
-            _userManager.CurrentUser?.Recipes.Remove(SelectedRecipe); // tar bort det valda receptet från den inloggade användarens receptlista
+
+            if (_userManager.ÄrAdmin)
+            {
+                if(_userManager.RemoveRecipeEverywhere(SelectedRecipe, out string? fel))
+                {
+                    RefreshRecipes();
+                }
+                else
+                {
+                    MessageBox.Show(fel ?? "Kunde inte ta bort receptet.", "Fel",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                _userManager.CurrentUser?.Recipes.Remove(SelectedRecipe);
+                Recipes.Remove(SelectedRecipe);
+            }
+
+            Recipes.Remove(SelectedRecipe);
         }
 
         
@@ -85,10 +98,30 @@ namespace OPPNandoSalvatierraSYSM9.ViewModel
         public event EventHandler? OnViewUserDetailsRequested;
         public void RefreshRecipes() // Metod som uppdaterar listan med recept från den inloggade användaren
         {
-            Recipes.Clear(); // rensar den lokala listan först
-            if (_userManager.CurrentUser?.Recipes == null) return; // om den inloggade användaren inte har några recept så görs inget mer
-            foreach (var r in _userManager.CurrentUser.Recipes) // för varje r(recept) i den inloggade användarens receptlista
-                Recipes.Add(r); // läggs det till i den lokala listan som visas i fönstret 
+            IEnumerable<Recipe> Source;
+
+            if (_userManager.ÄrAdmin)
+            {
+                Source = _userManager.HämtaAllaRecept();
+            }
+            else
+            {
+                if (_userManager.CurrentUser != null)
+                {
+                    Source = _userManager.CurrentUser.Recipes;
+                }
+                else
+                {
+                    Source = new List<Recipe>();
+                }
+            }
+
+            Recipes = new ObservableCollection<Recipe>(Source);
+
+            OnPropertyChanged(nameof(Recipes));
         }
+
+
+
     }
 }

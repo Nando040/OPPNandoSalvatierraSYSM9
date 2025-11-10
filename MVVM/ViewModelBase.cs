@@ -9,12 +9,12 @@ using System.Windows.Input;
 
 namespace OPPNandoSalvatierraSYSM9.MVVM
 {
-    public class ViewModelBase : INotifyPropertyChanged // Basklass som mina ViewModels kan ärva från
+    public abstract class ViewModelBase : INotifyPropertyChanged // Basklass som mina ViewModels kan ärva från
     {
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             if (PropertyChanged != null)
             {

@@ -29,23 +29,27 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
-
-
+        
+        
+        <!--Text som visas i övre vänster kant vem som är inloggad-->
         <TextBlock Grid.Column="1" Grid.Row="1" Text="Inloggad som: " FontWeight="Bold" />
-        <TextBlock Grid.Column="2" Grid.Row="1" Text="{Binding LoggedInUser}" FontWeight="Bold"/>
-
+        <TextBlock Grid.Column="2" Grid.Row="1" Text="{Binding CurrentUserName}" FontWeight="Bold"/>
+        
+        <!--Rubrik-->
         <TextBlock Grid.Column="4" Grid.Row="2" Text="CookMaster" 
-   FontSize="36" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="0,0,0,10" 
-   FontFamily="Magneto" FontWeight="Bold" Width="315"/>
-
+         FontSize="36" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="0,0,0,10" 
+         FontFamily="Magneto" FontWeight="Bold" Width="315"/>
+        <!--Knapp till att logga ut-->
         <Button x:Name="LogoutBtn" Content="Logout" 
         Width="100" Height="20" Margin="5"
         Grid.Row="1" Grid.Column="6"
         Command="{Binding LogoutCommand}"/>
         <Button x:Name="UserDetBtn" Content="User Details"
                 Width="100" Height="20" Margin="5"
-                Grid.Row="2" Grid.Column="6"
-                Command="{Binding UserDetailsCommand}"/>
+                Grid.Row="2" Grid.Column="6" Command="{Binding UserDetailsCommand}"/>
+        <Button x:Name="InfoBtn" Grid.Column="6" Grid.Row="3" Content="Info"
+                Width="100" Height="20" Margin="5"
+                Click="InfoBtn_Click"/>
 
         <StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="6" Orientation="Horizontal"
             HorizontalAlignment="Left">
@@ -55,19 +59,15 @@
             <Button x:Name="RemoveBtn" Content="Remove Recipe" 
             Width="100" Height="20" Margin="5"
             Command="{Binding RemoveRecipeCommand}"/>
-            <Button x:Name="RecipeDetBtn" Content="View Details"
-                    Width="100" Height="20" Margin="5" Command="{Binding RecipeDetailsCommand}"/> 
-
-
-
-
+            <Button x:Name="RecipeDetBtn" Content="Recipe Details"
+                    Width="100" Height="20" Margin="5" Command="{Binding RecipeDetailCommand}"/>
         </StackPanel>
 
         <ListBox x:Name="RecipeListBox" Height="230"
          Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="6"
          ItemsSource="{Binding Recipes}" 
          SelectedItem="{Binding SelectedRecipe, Mode=TwoWay}"
-         DisplayMemberPath="Title"
+         DisplayMemberPath="Titel"
          Margin="10"/>
     </Grid>
 </Window>

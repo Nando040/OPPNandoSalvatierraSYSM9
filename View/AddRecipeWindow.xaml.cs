@@ -24,9 +24,10 @@ namespace OPPNandoSalvatierraSYSM9.View
         public AddRecipeWindow(UserManager userManager)
         {
             InitializeComponent();
-            var vm = new AddRecipeViewModel(userManager);
+            var vm = new AddRecipeViewModel((UserManager)Application.Current.Resources["UserManager"]);
             vm.CloseRequested += (_, __) => this.Close();
-            DataContext = vm;
+            DataContext = vm; // Ser till att man kan stänga fönstret utan att krasha programmet
         }
+
     }
 }

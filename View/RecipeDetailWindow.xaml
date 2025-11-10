@@ -1,0 +1,82 @@
+﻿<Window x:Class="OPPNandoSalvatierraSYSM9.View.RecipeDetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OPPNandoSalvatierraSYSM9.View"
+        xmlns:conv="clr-namespace:OPPNandoSalvatierraSYSM9.Converters"
+        mc:Ignorable="d"
+        Title="RecipeDetailWindow" Height="450" Width="800">
+    <Window.Resources>
+        <conv:NotConverter x:Key="Not"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="*"   />
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="*"   />
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!--Rubkrik med samma FontFamily som resten av appen-->
+        <TextBlock Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="3"
+               Text="CookMaster" FontFamily="Magneto" FontSize="36" FontWeight="Bold"
+               HorizontalAlignment="Left" VerticalAlignment="Top" Margin="22,9,0,0"/>
+        <!--En stackpanel som är uppifrån och ner med knappar-->
+        <StackPanel Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" Orientation="Vertical">
+            <!--Knappen som redigerar-->
+            <Button Content="Edit"   Width="100" Height="24" Margin="0,0,0,6"
+              Command="{Binding EditCommand}"/>
+            <!--Knappen som sparar-->
+            <Button Content="Save"   Width="100" Height="24" Margin="0,0,0,6"
+              Command="{Binding SaveCommand}"/>
+            <!--Knappen som tar bort-->
+            <Button Content="Cancel" Width="100" Height="24"
+              Command="{Binding CancelCommand}"/>
+        </StackPanel>
+
+        <!--Texten som häbisar till receptnamn-->
+        <TextBlock Grid.Row="1" Grid.Column="2" Text="Title:" VerticalAlignment="Center" FontWeight="Bold"/>
+        <!--Text box som du kan redigera receptnamn-->
+        <TextBox   Grid.Row="1" Grid.Column="3" Margin="0,2,10,2"
+               Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
+               IsReadOnly="{Binding IsEditing, Converter={StaticResource Not}}"/>
+        <!--IsReadonly gör så att man inte kan redigera, convertern gör det möjlig att redigera -->
+        <!--Om man trycker på button IsEditing är skapat i codebehind -->
+
+        <TextBlock Grid.Row="1" Grid.Column="5" Text="Category:" VerticalAlignment="Center" FontWeight="Bold"/>
+        <ComboBox  Grid.Row="1" Grid.Column="6" Margin="0,2,10,2"
+               ItemsSource="{Binding Categories}"
+               SelectedItem="{Binding Category}"
+               IsEnabled="{Binding IsEditing}"/>
+
+
+        <TextBlock Grid.Row="2" Grid.Column="2" Text="Date:" VerticalAlignment="Center" FontWeight="Bold"/>
+        <DatePicker Grid.Row="2" Grid.Column="3" Margin="0,2,10,2"
+                SelectedDate="{Binding Date}" IsEnabled="{Binding IsEditing}"/>
+
+
+        <TextBlock Grid.Row="3" Grid.Column="2" Text="Ingredients:" FontWeight="Bold" VerticalAlignment="Top" Margin="0,0,0,6"/>
+        <TextBox   Grid.Row="3" Grid.Column="3" Margin="0,0,10,0" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
+               Text="{Binding Ingredients, UpdateSourceTrigger=PropertyChanged}"
+               IsReadOnly="{Binding IsEditing, Converter={StaticResource Not}}" Height="304" VerticalAlignment="Top"/>
+
+        <TextBlock Grid.Row="3" Grid.Column="5" Text="Instructions:" FontWeight="Bold" VerticalAlignment="Top" Margin="0,0,0,6"/>
+        <TextBox   Grid.Row="3" Grid.Column="6" Margin="0,0,10,23" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
+               Text="{Binding Instructions, UpdateSourceTrigger=PropertyChanged}"
+               IsReadOnly="{Binding IsEditing, Converter={StaticResource Not}}"/>
+
+    </Grid>
+</Window>
